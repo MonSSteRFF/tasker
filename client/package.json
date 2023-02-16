@@ -7,10 +7,15 @@
     "serve": "vite preview",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
-    "lint": "yarn lint:format && yarn lint:fix ",
-    "type-check": "tsc"
+    "lint": "npm run lint:format && npm run lint:fix ",
+    "type-check": "tsc",
+    "server-develop": "cd ../server && npm run develop",
+    "server-start": "cd ../server && npm run start",
+    "server-build": "cd ../server && npm run build",
+    "server-strapi": "cd ../server && npm run strapi"
   },
   "dependencies": {
+    "@fontsource/montserrat": "^4.5.14",
     "axios": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

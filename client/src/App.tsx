@@ -1,34 +1,51 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import Counter from './Pages/Counter';
+import Header from './components/Header';
+import HomePage from './Pages/Home.page';
+import LoginPage from './Pages/Login.page';
+import RegistrationPage from './Pages/Registration.page';
+
+const routes = [
+  {
+    path: '/',
+    element: HomePage,
+    id: 'home',
+  },
+  {
+    path: '/login',
+    element: LoginPage,
+    id: 'login',
+  },
+  {
+    path: '/registration',
+    element: RegistrationPage,
+    id: 'registration',
+  },
+];
 
 function App() {
-  const routes = [
-    {
-      path: '/',
-      element: Counter,
-    },
-  ];
-
   return (
     <>
-      <header></header>
-      <main>
-        <Routes>
-          {routes.map((route, index) => (
-            <Route
-              key={index}
-              element={<route.element />}
-              path={route.path}
-              index={route.path === '/'}
-            />
-          ))}
-        </Routes>
-      </main>
-      <footer></footer>
+      <Routes>
+        {routes.map((route) => (
+          <Route
+            key={route.id}
+            index={route.id === 'home'}
+            element={
+              <>
+                <Header />
+                <route.element />
+              </>
+            }
+            path={route.path}
+          />
+        ))}
+      </Routes>
     </>
   );
 }
+
+export { routes };
 
 export default App;

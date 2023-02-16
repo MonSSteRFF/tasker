@@ -1,0 +1,34 @@
+.label{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  cursor: text;
+  .input{
+    border: 1px var(--mainColor) solid;
+    padding: 5px 10px;
+    color: var(--mainColorL0);
+    border-radius: 10px;
+    transition: .4s;
+    &:focus{
+      border: 1px var(--mainColorL0) solid;
+      border-radius: 20px;
+    }
+  }
+  .placeholder{
+    position: absolute;
+    left: 10px;
+    background: var(--alternativeColor);
+    transition: .4s;
+    top: 7px;
+    line-height: 1.1;
+    user-select: none;
+  }
+  .input.isActive + .placeholder,
+  .input:focus + .placeholder{
+    top: -14px;
+    left: 25px;
+    font-size: 14px;
+  }
+}

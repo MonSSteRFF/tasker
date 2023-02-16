@@ -1,0 +1,14 @@
+.form{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  &_title{
+    margin-bottom: 20px;
+  }
+  &_error{
+    margin-top: 10px;
+    color: #ff0000;
+  }
+}

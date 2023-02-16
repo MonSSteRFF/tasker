@@ -1,20 +1,18 @@
-'use strict';
+const dotenv = require("dotenv");
+const { authCheck } = require("./auth/authCheck");
+dotenv.config();
 
-module.exports = {
-  /**
-   * An asynchronous register function that runs before
-   * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
-   */
-  register(/*{ strapi }*/) {},
+const fastify = require("fastify")({ logger: true });
 
-  /**
-   * An asynchronous bootstrap function that runs before
-   * your application gets started.
-   *
-   * This gives you an opportunity to set up your data model,
-   * run jobs, or perform some special logic.
-   */
-  bootstrap(/*{ strapi }*/) {},
-};
+fastify.get("/*", async (request, reply) => {
+  authCheck(request.headers, reply);
+
+  return { req: "data" };
+});
+
+fastify.listen({ port: 3000 }).then((ip, err) => {
+  console.log(`server start on ${ip}`);
+  if (err) {
+    throw new Error(err);
+  }
+});
