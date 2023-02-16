@@ -1,13 +1,28 @@
-const dotenv = require("dotenv");
 const { authCheck } = require("./auth/authCheck");
-dotenv.config();
-
+const { getApi, postApi } = require("./api");
+require("dotenv").config();
 const fastify = require("fastify")({ logger: true });
+
+// get
 
 fastify.get("/*", async (request, reply) => {
   authCheck(request.headers, reply);
 
-  return { req: "data" };
+  if (request.url.split("?").shift() === "/api") {
+    return getApi(request.query);
+  }
+
+  return "bad request";
+});
+
+fastify.post("/*", async (request, reply) => {
+  authCheck(request.headers, reply);
+
+  if (request.url.split("?").shift() === "/api") {
+    return postApi(request.query, request.body);
+  }
+
+  return "bad request";
 });
 
 fastify.listen({ port: 3000 }).then((ip, err) => {
