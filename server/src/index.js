@@ -5,6 +5,8 @@ const fastify = require("fastify")({ logger: true });
 
 // get
 
+// todo: https://github.com/typicode/lowdb
+
 fastify.get("/*", async (request, reply) => {
   authCheck(request.headers, reply);
 
