@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Form from '../components/ui/Form';
-import useInput from '../components/ui/hooks/useInput';
+import Form from '../../../components/ui/FormModule/Form';
+import useInput from '../../../components/ui/FormModule/useInput';
 
 const LoginPage: React.FC = () => {
   const fields = [
@@ -15,11 +15,11 @@ const LoginPage: React.FC = () => {
 
   return (
     <main className={'container fullHeight'}>
-      <Form
-        title={'Login'}
-        fields={fields}
-        button={{ text: 'sing in', callback: loginHandler }}
-      />
+      {/*<Form*/}
+      {/*  title={'Login'}*/}
+      {/*  fields={fields}*/}
+      {/*  button={{ text: 'sing in', callback: loginHandler }}*/}
+      {/*/>*/}
     </main>
   );
 };

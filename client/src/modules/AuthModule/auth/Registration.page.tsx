@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import Form from '../components/ui/Form';
-import useInput from '../components/ui/hooks/useInput';
+import Form from '../../../components/ui/FormModule/Form';
+import useInput from '../../../components/ui/FormModule/useInput';
 
 const RegistrationPage: React.FC = () => {
   const fields = [
@@ -28,11 +28,11 @@ const RegistrationPage: React.FC = () => {
 
   return (
     <main className={'container fullHeight'}>
-      <Form
-        title={'Register'}
-        fields={fields}
-        button={{ text: 'sing up', callback: registerHandler }}
-      />
+      {/*<Form*/}
+      {/*  title={'Register'}*/}
+      {/*  fields={fields}*/}
+      {/*  button={{ text: 'sing up', callback: registerHandler }}*/}
+      {/*/>*/}
     </main>
   );
 };

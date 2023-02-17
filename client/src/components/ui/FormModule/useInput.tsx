@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
 
+import { useInput_endpoint, useInput_props } from './FormModule.types';
 import styles from './useInput.module.scss';
-
-interface useInput_props {
-  init?: string;
-  placeholder: string;
-  type?: string;
-  name: string;
-}
-interface useInput_endpoint {
-  element: JSX.Element;
-  value: string;
-  name: string;
-  isValid: boolean;
-}
-
-const emailRegx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 type I_useInput = (props: useInput_props) => useInput_endpoint;
 
 const useInput: I_useInput = (props) => {
-  const { init = '', placeholder, type = 'text', name } = props;
+  const { init = '', placeholder, type = 'text', name, onChangeField } = props;
   const [value, setValue] = useState<string>(init);
   const [error, setError] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -28,24 +14,8 @@ const useInput: I_useInput = (props) => {
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
-
-    switch (name) {
-      case 'Username': {
-        setIsValid(newValue.length > 4);
-        break;
-      }
-      case 'Email': {
-        setIsValid(emailRegx.test(newValue));
-        break;
-      }
-      case 'Password': {
-        setIsValid(newValue.length > 6);
-        break;
-      }
-      case 'Repeat password': {
-        setIsValid(newValue.length > 6);
-        break;
-      }
+    if (onChangeField !== undefined) {
+      onChangeField(newValue);
     }
   };
 
@@ -63,10 +33,9 @@ const useInput: I_useInput = (props) => {
   );
 
   return {
-    element: Element,
-    value: value,
-    name: name,
-    isValid: isValid,
+    input: { element: Element, value: value, name: name },
+    validState: { state: isValid, setState: setIsValid },
+    errorState: { state: error, setState: setError },
   };
 };
 
