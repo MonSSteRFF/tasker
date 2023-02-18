@@ -3,8 +3,6 @@ import React from 'react';
 import styles from './Form.module.scss';
 import { form_props, formFieldData } from './FormModule.types';
 
-const emailRegx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
 const Form: React.FC<form_props> = (props) => {
   const { title, fields, button } = props;
 

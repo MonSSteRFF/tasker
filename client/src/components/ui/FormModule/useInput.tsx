@@ -9,7 +9,7 @@ const useInput: I_useInput = (props) => {
   const { init = '', placeholder, type = 'text', name, onChangeField } = props;
   const [value, setValue] = useState<string>(init);
   const [error, setError] = useState<string>('');
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const [isValid, setIsValid] = useState<boolean>(false);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -20,7 +20,7 @@ const useInput: I_useInput = (props) => {
   };
 
   const Element = (
-    <label className={styles.label}>
+    <label className={`${styles.label}  ${error !== '' ? `${styles.IsError}` : ''}`}>
       <input
         name={name}
         type={type}
@@ -29,6 +29,7 @@ const useInput: I_useInput = (props) => {
         className={`${styles.input} ${value !== '' ? `${styles.isActive}` : ''}`}
       />
       <span className={styles.placeholder}>{placeholder}</span>
+      <span className={styles.error}>{error}</span>
     </label>
   );
 

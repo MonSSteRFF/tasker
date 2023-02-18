@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Header from '../../../components/Header';
 import Form from '../../../components/ui/FormModule/Form';
 import useInput from '../../../components/ui/FormModule/useInput';
 
@@ -14,13 +15,15 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <main className={'container fullHeight'}>
-      {/*<Form*/}
-      {/*  title={'Login'}*/}
-      {/*  fields={fields}*/}
-      {/*  button={{ text: 'sing in', callback: loginHandler }}*/}
-      {/*/>*/}
-    </main>
+    <>
+      <main className={'container fullHeight'}>
+        {/*<Form*/}
+        {/*  title={'Login'}*/}
+        {/*  fields={fields}*/}
+        {/*  button={{ text: 'sing in', callback: loginHandler }}*/}
+        {/*/>*/}
+      </main>
+    </>
   );
 };
 

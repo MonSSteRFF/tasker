@@ -5,12 +5,15 @@
   justify-content: flex-start;
   margin-bottom: 20px;
   cursor: text;
+  transition: .4s;
+  width: 100%;
   .input{
     border: 1px var(--mainColor) solid;
     padding: 5px 10px;
     color: var(--mainColorL0);
     border-radius: 10px;
     transition: .4s;
+    width: 100%;
     &:focus{
       border: 1px var(--mainColorL0) solid;
       border-radius: 20px;
@@ -30,5 +33,21 @@
     top: -14px;
     left: 25px;
     font-size: 14px;
+    color: var(--mainColorL0)
+  }
+  .error{
+    position: absolute;
+    bottom: -15px;
+    left: 10px;
+    font-size: 14px;
+    line-height: 1.1;
+    user-select: none;
+    color: var(--errorColor);
+  }
+  &.IsError{
+    margin-bottom: 30px;
+    .input{
+      border-color: var(--errorColor);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { routes } from '../App';
@@ -10,20 +10,20 @@ const Header: React.FC = () => {
 
   const [routesList, setRoutesList] = useState(routes);
 
-  useEffect(() => {
-    if (
-      pathname.replaceAll('/', '') === 'login' ||
-      pathname.replaceAll('/', '') === 'registration'
-    ) {
-      setRoutesList(
-        routes.filter((route) => route.id === 'login' || route.id === 'registration'),
-      );
-    } else {
-      setRoutesList(
-        routes.filter((route) => route.id !== 'login' && route.id !== 'registration'),
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (
+  //     pathname.replaceAll('/', '') === 'login' ||
+  //     pathname.replaceAll('/', '') === 'registration'
+  //   ) {
+  //     setRoutesList(
+  //       routes.filter((route) => route.id === 'login' || route.id === 'registration'),
+  //     );
+  //   } else {
+  //     setRoutesList(
+  //       routes.filter((route) => route.id !== 'login' && route.id !== 'registration'),
+  //     );
+  //   }
+  // }, [pathname]);
 
   return (
     <header className={styles.header}>
@@ -31,7 +31,11 @@ const Header: React.FC = () => {
         <ul className={styles.nav_list}>
           {routesList.map((route) => {
             const active =
-              route.path.replaceAll('/', '') === pathname.replaceAll('/', '');
+              route.path?.replaceAll('/', '') === pathname.replaceAll('/', '');
+
+            if (route.id === undefined || route.path === undefined) {
+              return null;
+            }
 
             return (
               <li key={route.id} className={styles.nav_item}>
