@@ -1,57 +1,47 @@
-import React from 'react';
-import {
-  createBrowserRouter,
-  Navigate,
-  RouteObject,
-  RouterProvider,
-} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate, useOutlet } from 'react-router-dom';
 
-import Header from './components/Header';
-import LoginPage from './modules/AuthModule/auth/Login.page';
-import RegistrationPage from './modules/AuthModule/auth/Registration.page';
-import HomePage from './Pages/Home.page';
+import Header from './components/Header/Header';
+import LoginPage from './modules/AuthModule/authPages/Login.page';
+import RegistrationPage from './modules/AuthModule/authPages/Registration.page';
+import HomePage from './modules/HomeModule/Home.page';
 
-const routes: RouteObject[] = [
-  {
-    path: '/',
-    element: (
-      <>
-        <Header />
-        <HomePage />
-      </>
-    ),
-    id: 'home',
-  },
-  {
-    path: '/auth',
-    element: <Navigate to={'/auth/login'} />,
-  },
-  {
-    path: '/auth/login',
-    element: (
-      <>
-        <Header />
-        <LoginPage />
-      </>
-    ),
-    id: 'login',
-  },
-  {
-    path: '/auth/registration',
-    element: (
-      <>
-        <Header />
-        <RegistrationPage />
-      </>
-    ),
-    id: 'registration',
-  },
-];
+const Layout = () => {
+  const outlet = useOutlet();
+  const pathname = useLocation().pathname;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (pathname === '/auth') {
+      navigate('/auth/login');
+    }
+  }, [pathname]);
+
+  return (
+    <>
+      <Header />
+      {outlet}
+    </>
+  );
+};
 
 function App() {
-  return <RouterProvider router={createBrowserRouter(routes)} />;
-}
+  return (
+    <>
+      <Routes>
+        <Route path={'/'}>
+          <Route element={<Layout />}>
+            <Route index element={<HomePage />} />
+          </Route>
 
-export { routes };
+          <Route path={'/auth'} element={<Layout />}>
+            <Route path={'login'} element={<LoginPage />} />
+            <Route path={'registration'} element={<RegistrationPage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </>
+  );
+}
 
 export default App;

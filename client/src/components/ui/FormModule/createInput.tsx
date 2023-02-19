@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
+import styles from './Form.module.scss';
 import { useInput_endpoint, useInput_props } from './FormModule.types';
-import styles from './useInput.module.scss';
 
 type I_useInput = (props: useInput_props) => useInput_endpoint;
 
-const useInput: I_useInput = (props) => {
+const createInput: I_useInput = (props) => {
   const { init = '', placeholder, type = 'text', name, onChangeField } = props;
   const [value, setValue] = useState<string>(init);
   const [error, setError] = useState<string>('');
@@ -23,6 +23,7 @@ const useInput: I_useInput = (props) => {
     <label className={`${styles.label}  ${error !== '' ? `${styles.IsError}` : ''}`}>
       <input
         name={name}
+        autoComplete={name}
         type={type}
         value={value}
         onChange={inputChangeHandler}
@@ -40,4 +41,4 @@ const useInput: I_useInput = (props) => {
   };
 };
 
-export default useInput;
+export default createInput;

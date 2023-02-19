@@ -1,0 +1,41 @@
+@use '../../index' as *;
+
+.header{
+  border-bottom: var(--mainColor) 1px solid;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  padding: 15px 0;
+  &_nav{
+    @extend .container;
+  }
+  .nav{
+    &_list{
+      display: flex;
+      align-items: center;
+    }
+    &_item{
+      margin-right: 40px;
+      &_link{
+        @extend .link;
+        &:before{
+          display: none;
+        }
+      }
+    }
+    &_line{
+      display: block;
+      position: absolute;
+      top: 22px;
+      background: var(--mainColorL0);
+      height: 2px;
+      width: 100%;
+      max-width: 0;
+      transition-property: left, max-width;
+      transition-duration: .4s;
+    }
+  }
+}

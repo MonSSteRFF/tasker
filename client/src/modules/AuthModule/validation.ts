@@ -1,8 +1,8 @@
-import { useInput_endpoint } from './FormModule.types';
-const emailRegex = /[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/i;
+import { useInput_endpoint } from '../../components/ui/FormModule/FormModule.types';
+export const emailRegex = /[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/i;
 
 type validationFunc = (field: useInput_endpoint, value: string) => void;
-type validationFuncСompare = (
+type validationFuncCompare = (
   field: useInput_endpoint,
   compareField: useInput_endpoint,
   value: string,
@@ -47,7 +47,7 @@ const validation_password: validationFunc = (field, value) => {
   }
 };
 
-const validation_compareFields: validationFuncСompare = (field, compareField, value) => {
+const validation_compareFields: validationFuncCompare = (field, compareField, value) => {
   const _setIsValid = field.validState.setState;
   const _setError = field.errorState.setState;
 
