@@ -1,28 +1,20 @@
 node_modules
 node_modules/*
-*/node_modules/*
 
 dist
 dist/*
-*/dist
 
 .env
 /.env
 */.env
 
-
 .idea
 .idea/*
-*/.idea/*
 
 database
 database/*
 */database
 */database/*
-database/*.json
-*/database/*.json
-**/database/*.json
-**/database/**.json
 
 
 !database/index.js
