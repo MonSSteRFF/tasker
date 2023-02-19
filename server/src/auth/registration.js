@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import JSEncrypt from "node-jsencrypt";
 import { keysDatabase, usersDatabase } from "../database/index.js";
 
@@ -15,16 +17,38 @@ const registration = async (request, reply) => {
 
   const crypt = new JSEncrypt();
   crypt?.setPrivateKey(keyPair.private);
-  const newUserData = crypt?.decrypt(request.body.data);
+  const newUserData = JSON.parse(crypt?.decrypt(request.body.data));
 
-  console.log(newUserData);
 
   await usersDatabase.read();
-  const currentUsers = usersDatabase.data;
+  const _userDatabase = Object.assign([],usersDatabase.data);
+  const matchUsers = _userDatabase.filter((userdb) => {
+    if (userdb.email === newUserData.email){
+      reply.send({error: 'email is already taken'})
+      return true;
+    }
+    if (userdb.username === newUserData.username){
+      reply.send({error: 'username is already taken'})
+      return true;
+    }
+    return false;
+  })
 
+
+  if (matchUsers.length === 0){
+    const userCrypt = new JSEncrypt();
+    userCrypt?.setPublicKey(process.env.VITE_SERVER_PUBLIC_KEY);
+    userCrypt?.setPrivateKey(process.env.VITE_SERVER_PRIVATE_KEY);
+
+    usersDatabase.data.push({
+      id: `${usersDatabase.data.length + 1}`,
+      username: newUserData.username,
+      email: newUserData.email,
+      password: userCrypt?.encrypt(newUserData.password)
+    });
+    reply.send({data: "user added"})
+  }
   await usersDatabase.write();
-
-  console.log(newUserData);
 };
 
 export { registration };
