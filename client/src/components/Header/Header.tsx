@@ -63,33 +63,32 @@ const Header: React.FC = () => {
   const refList = useRef<HTMLUListElement>(null);
 
   const changeLineState = () => {
-    const line = refLine.current;
-    const list = refList.current;
+    const empty: HTMLElement = document.createElement('p');
+    const emptyList: NodeListOf<HTMLLIElement> = empty.querySelectorAll('li');
 
-    if (line === null || list === null) {
-      return false;
-    }
+    const line = refLine.current !== null ? refLine.current : empty;
+    const list = refList.current !== null ? refList.current : empty;
+    const listElements =
+      list.querySelectorAll('li').length > 0 ? list.querySelectorAll('li') : emptyList;
 
-    const listElements = list.querySelectorAll('li');
-
-    if (listElements.length === 0) {
+    if (line === empty || list === empty || listElements === emptyList) {
       return false;
     }
 
     const listElement = listElements[pickedRouteId];
 
-    setTimeout(() => {
-      line.setAttribute(
-        'style',
-        `max-width: ${listElement.offsetWidth}px; left: ${listElement.offsetLeft}px;`,
-      );
-    }, 50);
-
-    console.log();
+    line.setAttribute(
+      'style',
+      `max-width: ${listElement.offsetWidth}px; left: ${listElement.offsetLeft}px;`,
+    );
   };
 
   useEffect(() => {
+    window.addEventListener('load', changeLineState);
+
     changeLineState();
+
+    return () => window.removeEventListener('load', changeLineState);
   }, [pickedRouteId]);
 
   return (

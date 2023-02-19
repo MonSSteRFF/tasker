@@ -6,7 +6,7 @@ import {
   formFieldData,
   useInput_endpoint,
 } from '@/components/ui/FormModule';
-import { GetRequest } from '@/middleware/postGetRequest';
+import useAuthStore from '@/modules/AuthModule/store/useAuthStore';
 import {
   validation_compareFields,
   validation_email,
@@ -16,13 +16,9 @@ import {
 
 import styles from './auth.module.scss';
 
-const getAuthTokenForSend = () => {
-  GetRequest('/getPublicKey').then((res: any) => {
-    console.log(res);
-  });
-};
-
 const RegistrationPage: React.FC = () => {
+  const registration = useAuthStore((state) => state.registration);
+
   const onSubmitFormHandler = (data: Array<formFieldData>) => {
     let isValidForm = true;
     const formData: { [key: string]: string } = {};
@@ -39,8 +35,7 @@ const RegistrationPage: React.FC = () => {
     if (isValidForm) {
       // todo: post register request formData to server
     }
-
-    getAuthTokenForSend();
+    registration(formData);
   };
 
   const fields: Array<useInput_endpoint> = [

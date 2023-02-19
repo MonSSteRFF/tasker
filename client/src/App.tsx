@@ -15,7 +15,7 @@ const Layout = () => {
     if (pathname === '/auth') {
       navigate('/auth/login');
     }
-  }, [pathname]);
+  }, [pathname, outlet]);
 
   return (
     <>
