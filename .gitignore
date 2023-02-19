@@ -15,4 +15,16 @@ dist/*
 .idea/*
 */.idea/*
 
+database
+database/*
+*/database
+*/database/*
+database/*.json
 */database/*.json
+**/database/*.json
+**/database/**.json
+
+
+!database/index.js
+
+
