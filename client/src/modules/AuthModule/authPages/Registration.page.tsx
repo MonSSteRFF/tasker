@@ -6,6 +6,7 @@ import {
   formFieldData,
   useInput_endpoint,
 } from '@/components/ui/FormModule';
+import { GetRequest } from '@/middleware/postGetRequest';
 import {
   validation_compareFields,
   validation_email,
@@ -14,6 +15,12 @@ import {
 } from '@/modules/AuthModule/validation';
 
 import styles from './auth.module.scss';
+
+const getAuthTokenForSend = () => {
+  GetRequest('/getPublicKey').then((res: any) => {
+    console.log(res);
+  });
+};
 
 const RegistrationPage: React.FC = () => {
   const onSubmitFormHandler = (data: Array<formFieldData>) => {
@@ -32,6 +39,8 @@ const RegistrationPage: React.FC = () => {
     if (isValidForm) {
       // todo: post register request formData to server
     }
+
+    getAuthTokenForSend();
   };
 
   const fields: Array<useInput_endpoint> = [

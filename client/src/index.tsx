@@ -10,6 +10,8 @@ import montserrat400w2 from '@fontsource/montserrat/files/montserrat-cyrillic-ex
 import montserrat500w2 from '@fontsource/montserrat/files/montserrat-cyrillic-ext-500-normal.woff2';
 import montserrat600w2 from '@fontsource/montserrat/files/montserrat-cyrillic-ext-600-normal.woff2';
 
+import favicon from '@/assets/icons/favicon.svg';
+
 const montserratFontsPack = [
   { font: montserrat400, type: 'woff' },
   { font: montserrat500, type: 'woff' },
@@ -30,6 +32,12 @@ const root = document.getElementById('root') as HTMLElement;
 createRoot(root).render(
   <>
     <Helmet>
+      <meta charSet="UTF-8" />
+      <title>Tasker</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <link rel="icon" href={favicon} type="image/x-icon" />
+
       {montserratFontsPack.map((item, index) => (
         <link key={index} href={item.font} type={`font/${item.type}`} />
       ))}

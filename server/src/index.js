@@ -1,30 +1,16 @@
-const { authCheck } = require("./auth/authCheck");
-const { getApi, postApi } = require("./api");
 require("dotenv").config();
 const fastify = require("fastify")({ logger: true });
 
-// get
-
-// todo: https://github.com/typicode/lowdb
-
-fastify.get("/*", async (request, reply) => {
-  authCheck(request.headers, reply);
-
-  if (request.url.split("?").shift() === "/api") {
-    return getApi(request.query);
-  }
-
-  return "bad request";
+fastify.get("/api/getPublicKey", async (request, reply) => {
+  reply.send("token");
 });
 
-fastify.post("/*", async (request, reply) => {
-  authCheck(request.headers, reply);
+fastify.post("/api/auth/register", async (request, reply) => {
+  reply.send("true/false sing up");
+});
 
-  if (request.url.split("?").shift() === "/api") {
-    return postApi(request.query, request.body);
-  }
-
-  return "bad request";
+fastify.post("/api/auth/login", async (request, reply) => {
+  reply.send("true/false sing in");
 });
 
 fastify.listen({ port: 3000 }).then((ip, err) => {
