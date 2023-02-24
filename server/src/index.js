@@ -2,22 +2,38 @@ import dotenv from "dotenv";
 import fastifyApp from "fastify";
 dotenv.config();
 
-const fastify = fastifyApp({ logger: true });
+import cors from '@fastify/cors'
 
-import { getPublicKey } from "./auth/getPublicKey.js";
-import { registration } from "./auth/registration.js";
+const fastify = fastifyApp({ logger: true });
+fastify.register(cors);
+
+
+import getPublicKey from "./api/getPublicKey.js";
+import registration from "./api/auth/registration.js";
 import { keysDatabase } from "./database/index.js";
+import checkAuthToken from "./modules/checkAuthToken.js";
+import login from "./api/auth/login.js";
 
 fastify.get("/api/getPublicKey", (request, reply) => {
-  getPublicKey(request, reply);
+  const authToken = checkAuthToken(request, reply);
+  if (authToken !== false){
+    getPublicKey(request, reply, authToken);
+  }
 });
 
-fastify.post("/api/auth/register", async (request, reply) => {
-  registration(request, reply);
+
+fastify.post("/api/auth/register", (request, reply) => {
+  const authToken = checkAuthToken(request, reply);
+  if (authToken !== false){
+    registration(request, reply, authToken);
+  }
 });
 
-fastify.post("/api/auth/login", async (request, reply) => {
-  reply.send("true/false sing in");
+fastify.post("/api/auth/login", (request, reply) => {
+  const authToken = checkAuthToken(request, reply);
+  if (authToken !== false){
+    login(request, reply, authToken);
+  }
 });
 
 fastify.listen({ port: 3000 }).then((ip, err) => {
