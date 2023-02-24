@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { hideRoutes, takeCurrentPathnameId } from '@/components/Header/Header.module';
+import useAuthStore from '@/modules/AuthModule/store/useAuthStore';
 
 import styles from './Header.module.scss';
 
@@ -32,6 +33,9 @@ const Header: React.FC = () => {
   const [currentPathnameId, setCurrentPathnameId] = useState<number>(0);
   const [pickedRouteId, setPickedRouteId] = useState<number>(0);
 
+  const [lineWidthValue, setLineWidthValue] = useState<number>(0);
+  const [lineLeftValue, setLineLeftValue] = useState<number>(0);
+
   useEffect(() => {
     const newRoutes = hideRoutes(pathname, routesList);
     const defaultId = takeCurrentPathnameId(pathname, newRoutes);
@@ -59,50 +63,52 @@ const Header: React.FC = () => {
     }
   };
 
-  const refLine = useRef<HTMLElement>(null);
   const refList = useRef<HTMLUListElement>(null);
 
   const changeLineState = () => {
-    const empty: HTMLElement = document.createElement('p');
-    const emptyList: NodeListOf<HTMLLIElement> = empty.querySelectorAll('li');
-
-    const line = refLine.current !== null ? refLine.current : empty;
-    const list = refList.current !== null ? refList.current : empty;
-    const listElements =
-      list.querySelectorAll('li').length > 0 ? list.querySelectorAll('li') : emptyList;
-
-    if (line === empty || list === empty || listElements === emptyList) {
+    const listElements = refList.current?.querySelectorAll('li');
+    if (listElements === undefined) {
       return false;
     }
-
     const listElement = listElements[pickedRouteId];
 
-    line.setAttribute(
-      'style',
-      `max-width: ${listElement.offsetWidth}px; left: ${listElement.offsetLeft}px;`,
-    );
+    const width = listElement?.offsetWidth;
+    const left = listElement?.offsetLeft;
+
+    if (width !== undefined || left !== undefined) {
+      setLineWidthValue(width);
+      setLineLeftValue(left);
+    } else {
+      setTimeout(() => {
+        changeLineState();
+      }, 50);
+    }
   };
 
   useEffect(() => {
-    window.addEventListener('load', changeLineState);
-
-    changeLineState();
-
-    return () => window.removeEventListener('load', changeLineState);
+    document.fonts.ready.then(() => {
+      changeLineState();
+    });
   }, [pickedRouteId]);
+
+  const logout = useAuthStore((state) => state.logout);
+  const isLoginIn = useAuthStore((state) => state.isLoginIn);
 
   return (
     <header className={styles.header}>
       <nav className={styles.header_nav}>
-        <span ref={refLine} className={styles.nav_line} />
+        <span
+          className={styles.nav_line}
+          style={{ maxWidth: lineWidthValue, left: lineLeftValue }}
+        />
         <ul ref={refList} className={styles.nav_list}>
-          {routes.map((route) => {
+          {routes.map((route, index) => {
             const active =
               route.path.replaceAll('/', '') === pathname.replaceAll('/', '');
 
             return (
               <li
-                key={route.id}
+                key={route.id + index}
                 className={styles.nav_item}
                 onMouseEnter={mouseHandler}
                 onMouseLeave={mouseHandler}
@@ -120,6 +126,12 @@ const Header: React.FC = () => {
             );
           })}
         </ul>
+
+        {isLoginIn ? (
+          <button className={styles.nav_logoutButton} onClick={() => logout()}>
+            logout
+          </button>
+        ) : null}
       </nav>
     </header>
   );

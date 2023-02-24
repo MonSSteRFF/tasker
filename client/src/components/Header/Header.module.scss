@@ -11,6 +11,9 @@
   padding: 15px 0;
   &_nav{
     @extend .container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .nav{
     &_list{
@@ -33,9 +36,15 @@
       background: var(--mainColorL0);
       height: 2px;
       width: 100%;
-      max-width: 0;
       transition-property: left, max-width;
       transition-duration: .4s;
+    }
+    &_logoutButton{
+      position: absolute;
+      right: 0;
+      padding: 5px 10px;
+      font-size: 14px;
+      line-height: 16px;
     }
   }
 }

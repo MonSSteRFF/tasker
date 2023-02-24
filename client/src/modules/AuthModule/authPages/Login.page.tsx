@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { createInput, Form, formFieldData } from '@/components/ui/FormModule';
+import useAuthStore from '@/modules/AuthModule/store/useAuthStore';
 import {
   emailRegex,
   validation_email,
@@ -11,6 +12,8 @@ import {
 import styles from './auth.module.scss';
 
 const LoginPage: React.FC = () => {
+  const loginIn = useAuthStore((state) => state.loginIn);
+
   const onSubmitFormHandler = (data: Array<formFieldData>) => {
     let isValidForm = true;
     const formData: { [key: string]: string | undefined } = {};
@@ -28,7 +31,7 @@ const LoginPage: React.FC = () => {
     });
 
     if (isValidForm) {
-      // todo: post login request formData to server
+      loginIn(formData);
     }
   };
 

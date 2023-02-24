@@ -21,6 +21,7 @@ const montserratFontsPack = [
   { font: montserrat600w2, type: 'woff2' },
 ];
 
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
@@ -42,6 +43,7 @@ createRoot(root).render(
         <link key={index} href={item.font} type={`font/${item.type}`} />
       ))}
     </Helmet>
+
     <BrowserRouter>
       <App />
     </BrowserRouter>

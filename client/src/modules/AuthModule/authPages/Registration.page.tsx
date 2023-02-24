@@ -33,9 +33,8 @@ const RegistrationPage: React.FC = () => {
     });
 
     if (isValidForm) {
-      // todo: post register request formData to server
+      registration(formData);
     }
-    registration(formData);
   };
 
   const fields: Array<useInput_endpoint> = [
