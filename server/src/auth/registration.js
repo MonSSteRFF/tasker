@@ -1,9 +1,16 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import JSEncrypt from "node-jsencrypt";
-import { keysDatabase, usersDatabase } from "../../database/index.js";
+import { keysDatabase, usersDatabase } from "../database/index.js";
 
-const registration = async (request, reply, authToken) => {
+const registration = async (request, reply) => {
+  request.query.authToken ||= undefined;
+  const authToken = request.query.authToken;
+  if (authToken === undefined) {
+    reply.status(401);
+    reply.send("authToken required");
+  }
+
   await keysDatabase.read();
   const keyPair = keysDatabase.data[authToken];
   await keysDatabase.write();
@@ -16,21 +23,15 @@ const registration = async (request, reply, authToken) => {
   await usersDatabase.read();
   const _userDatabase = Object.assign([],usersDatabase.data);
   const matchUsers = _userDatabase.filter((userdb) => {
-    let error = '';
-
     if (userdb.email === newUserData.email){
-      error += 'email is already taken'
+      reply.send({error: 'email is already taken'})
+      return true;
     }
     if (userdb.username === newUserData.username){
-      error += 'username is already taken'
-    }
-
-    if (error.length !== 0){
-      reply.send(JSON.stringify({error: error}));
+      reply.send({error: 'username is already taken'})
       return true;
-    } else {
-      return false;
     }
+    return false;
   })
 
 
@@ -43,12 +44,11 @@ const registration = async (request, reply, authToken) => {
       id: `${usersDatabase.data.length + 1}`,
       username: newUserData.username,
       email: newUserData.email,
-      password: userCrypt?.encrypt(newUserData.password),
-      token: authToken,
+      password: userCrypt?.encrypt(newUserData.password)
     });
-    reply.send(JSON.stringify({token: authToken}))
+    reply.send({data: "user added"})
   }
   await usersDatabase.write();
 };
 
-export default registration;
+export { registration };
