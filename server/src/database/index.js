@@ -12,7 +12,7 @@ const readWriteDb = async (db, callback) => {
   await db.read();
 
   const data = db.data;
-  await callback(data);
+  db.data = await callback(data);
 
   await db.write();
   return data;

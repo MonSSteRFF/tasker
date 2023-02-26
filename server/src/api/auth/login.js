@@ -4,12 +4,13 @@ import { serverKeys } from '../../index.js';
 import decryptBody from '../../crypto/decryptBody.js';
 
 const login = async (request, reply, authToken) => {
-  const newUserData = decryptBody(request.body.data, authToken);
+  const newUserData = await decryptBody(request.body.data, authToken);
 
   await readWriteDb(usersDatabase, (data) => {
     const findUser = data.filter((user) => {
       if (user.email === newUserData.email || user.username === newUserData.username) {
         const userCrypt = new JSEncrypt();
+
         userCrypt?.setPublicKey(serverKeys.publicKey);
         userCrypt?.setPrivateKey(serverKeys.privateKey);
 
@@ -24,6 +25,7 @@ const login = async (request, reply, authToken) => {
     } else {
       reply.send(JSON.stringify({ error: 'username/email or password has incorrect' }));
     }
+    return data;
   });
 };
 

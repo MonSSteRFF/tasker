@@ -9,11 +9,15 @@
   width: 100%;
   background: #fff;
   padding: 15px 0;
-  &_nav{
-    @extend .container;
+  &_wrapper{
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  &_nav{
+    display: flex;
+    align-items: center;
+    position: relative;
   }
   .nav{
     &_list{
@@ -32,7 +36,7 @@
     &_line{
       display: block;
       position: absolute;
-      top: 22px;
+      top: 25px;
       background: var(--mainColorL0);
       height: 2px;
       width: 100%;
@@ -40,8 +44,6 @@
       transition-duration: .4s;
     }
     &_logoutButton{
-      position: absolute;
-      right: 0;
       padding: 5px 10px;
       font-size: 14px;
       line-height: 16px;

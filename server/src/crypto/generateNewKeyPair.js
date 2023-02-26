@@ -15,6 +15,7 @@ const generateNewKeyPair = async (authToken) => {
     setTimeout(async () => {
       await readWriteDb(keysDatabase, (data) => {
         delete data[authToken];
+        return data;
       });
     }, 1000);
   });

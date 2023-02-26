@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate, useOutlet } from 'react-router-dom';
 
 import useAuthStore from '@/modules/AuthModule/store/useAuthStore';
+import ProfilePage from '@/modules/ProfileModule/Profile.page';
 
 import Header from './components/Header/Header';
 import LoginPage from './modules/AuthModule/authPages/Login.page';
@@ -42,6 +43,7 @@ function App() {
         <Route path={'/'}>
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />
+            <Route path={'profile'} element={<ProfilePage />} />
           </Route>
 
           <Route path={'/auth'} element={<Layout />}>

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import Header from '../../components/Header/Header';
-
 const HomePage: React.FC = () => {
   const [counter, setCounter] = useState<number>(0);
 

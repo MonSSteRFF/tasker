@@ -30,7 +30,7 @@ const registration = async (request, reply, authToken) => {
       userCrypt?.setPublicKey(serverKeys.publicKey);
       userCrypt?.setPrivateKey(serverKeys.privateKey);
 
-      usersDatabase.data.push({
+      data.push({
         id: `${usersDatabase.data.length + 1}`,
         username: newUserData.username,
         email: newUserData.email,
@@ -39,6 +39,7 @@ const registration = async (request, reply, authToken) => {
       });
       reply.send(JSON.stringify({ token: authToken }));
     }
+    return data;
   });
 };
 

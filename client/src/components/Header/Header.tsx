@@ -17,6 +17,10 @@ const routesList: Array<I_NavigationRouteList> = [
     id: 'home',
   },
   {
+    path: '/profile',
+    id: 'profile',
+  },
+  {
     path: '/auth/login',
     id: 'login',
   },
@@ -35,6 +39,7 @@ const Header: React.FC = () => {
 
   const [lineWidthValue, setLineWidthValue] = useState<number>(0);
   const [lineLeftValue, setLineLeftValue] = useState<number>(0);
+  const [lineTopValue, setLineTopValue] = useState<number>(0);
 
   useEffect(() => {
     const newRoutes = hideRoutes(pathname, routesList);
@@ -74,10 +79,12 @@ const Header: React.FC = () => {
 
     const width = listElement?.offsetWidth;
     const left = listElement?.offsetLeft;
+    const top = listElement?.offsetHeight;
 
     if (width !== undefined || left !== undefined) {
       setLineWidthValue(width);
       setLineLeftValue(left);
+      setLineTopValue(top);
     } else {
       setTimeout(() => {
         changeLineState();
@@ -95,44 +102,45 @@ const Header: React.FC = () => {
   const isLoginIn = useAuthStore((state) => state.isLoginIn);
 
   return (
-    <header className={styles.header}>
-      <nav className={styles.header_nav}>
-        <span
-          className={styles.nav_line}
-          style={{ maxWidth: lineWidthValue, left: lineLeftValue }}
-        />
-        <ul ref={refList} className={styles.nav_list}>
-          {routes.map((route, index) => {
-            const active =
-              route.path.replaceAll('/', '') === pathname.replaceAll('/', '');
+    <header className={`${styles.header}`}>
+      <div className={`${styles.header_wrapper} container`}>
+        <nav className={styles.header_nav}>
+          <span
+            className={styles.nav_line}
+            style={{ maxWidth: lineWidthValue, left: lineLeftValue, top: lineTopValue }}
+          />
+          <ul ref={refList} className={styles.nav_list}>
+            {routes.map((route, index) => {
+              const active =
+                route.path.replaceAll('/', '') === pathname.replaceAll('/', '');
 
-            return (
-              <li
-                key={route.id + index}
-                className={styles.nav_item}
-                onMouseEnter={mouseHandler}
-                onMouseLeave={mouseHandler}
-              >
-                <Link
-                  to={route.path}
-                  className={`${styles.nav_item_link} ${
-                    active ? ` ${styles.isActive}` : ''
-                  }`}
+              return (
+                <li
+                  key={route.id + index}
+                  className={styles.nav_item}
+                  onMouseEnter={mouseHandler}
+                  onMouseLeave={mouseHandler}
                 >
-                  {route.id.charAt(0).toUpperCase() +
-                    route.id.split('').splice(1).join('')}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-
+                  <Link
+                    to={route.path}
+                    className={`${styles.nav_item_link} ${
+                      active ? ` ${styles.isActive}` : ''
+                    }`}
+                  >
+                    {route.id.charAt(0).toUpperCase() +
+                      route.id.split('').splice(1).join('')}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
         {isLoginIn ? (
           <button className={styles.nav_logoutButton} onClick={() => logout()}>
             logout
           </button>
         ) : null}
-      </nav>
+      </div>
     </header>
   );
 };

@@ -1,9 +1,13 @@
 import axios from 'axios';
-import { JSEncrypt } from 'jsencrypt';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { makeRandomId } from '@/modules/AuthModule/store/useAuthStore.module';
+import unicTokenFetch from '@/middleware/unicToken';
+import {
+  makeRandomId,
+  postLogin,
+  postRegistration,
+} from '@/modules/AuthModule/store/useAuthStore.module';
 
 interface authState {
   isLoginIn: boolean;
@@ -13,64 +17,21 @@ interface authState {
   logout: () => void;
 }
 
+type authSetType = (
+  partial:
+    | authState
+    | Partial<authState>
+    | ((state: authState) => authState | Partial<authState>),
+  replace?: boolean | undefined,
+) => void;
+
 const useAuthStore = create<authState>()(
   persist(
     (set, get) => ({
       isLoginIn: false,
       loginToken: '',
-      registration: async (formData) => {
-        const unicAuthToken = makeRandomId(32);
-
-        axios
-          .get(`${import.meta.env.VITE_API}/api/getPublicKey?authToken=${unicAuthToken}`)
-          .then(({ data }) => {
-            const crypt = new JSEncrypt();
-            crypt.setPublicKey(data);
-            const encryptData = crypt.encrypt(JSON.stringify(formData));
-
-            axios
-              .post(
-                `${
-                  import.meta.env.VITE_API
-                }/api/auth/register?authToken=${unicAuthToken}`,
-                { data: encryptData },
-              )
-              .then(({ data }) => {
-                if (data.error !== undefined) {
-                  console.log('error', data);
-                  set({ loginToken: '', isLoginIn: false });
-                } else {
-                  set({ loginToken: data.token, isLoginIn: true });
-                }
-              });
-          });
-      },
-      loginIn: async (formData) => {
-        const unicAuthToken = makeRandomId(32);
-
-        axios
-          .get(`${import.meta.env.VITE_API}/api/getPublicKey?authToken=${unicAuthToken}`)
-          .then(({ data }) => {
-            const crypt = new JSEncrypt();
-            crypt.setPublicKey(data);
-
-            const encryptData = crypt.encrypt(JSON.stringify(formData));
-
-            axios
-              .post(
-                `${import.meta.env.VITE_API}/api/auth/login?authToken=${unicAuthToken}`,
-                { data: encryptData },
-              )
-              .then(({ data }) => {
-                if (data.error !== undefined) {
-                  console.log('error', data);
-                  set({ loginToken: '', isLoginIn: false });
-                } else {
-                  set({ loginToken: data.token, isLoginIn: true });
-                }
-              });
-          });
-      },
+      registration: (formData) => postRegistration(formData, set),
+      loginIn: (formData) => postLogin(formData, set),
       logout: () => set({ isLoginIn: false, loginToken: '' }),
     }),
     {
@@ -84,4 +45,5 @@ const useAuthStore = create<authState>()(
   ),
 );
 
+export type { authSetType, authState };
 export default useAuthStore;
