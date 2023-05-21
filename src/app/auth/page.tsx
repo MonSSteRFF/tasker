@@ -4,7 +4,7 @@ import fs from 'fs';
 import React from 'react';
 
 import AuthPage from '@/app/auth/AuthPage';
-import { T_Page } from '@/app/typings';
+import { T_Page } from '@/typings';
 
 const Page: T_Page = (req) => {
   const authData = JSON.parse(fs.readFileSync('./data/auth/authData.json', 'utf8'));

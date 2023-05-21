@@ -2,8 +2,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-import { I_User } from '@/app/typings';
 import prisma from '@/prisma';
+import { I_User } from '@/typings';
 
 const POST = async (req: NextRequest) => {
   const user = (await req.json()) as I_User;

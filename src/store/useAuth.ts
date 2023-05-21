@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { I_User } from '@/app/typings';
+import { I_User } from '@/typings';
 
 interface I_UserState extends I_User {
   token: string;

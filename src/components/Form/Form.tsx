@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-import { FormFieldNameEnum, FormProps } from '@/app/typings';
+import { FormFieldNameEnum, FormProps } from '@/typings';
 
 interface FormField {
   name: FormFieldNameEnum;

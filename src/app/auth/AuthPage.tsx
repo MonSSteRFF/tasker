@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
-import { FormProps } from '@/app/typings';
 import Form from '@/components/Form/Form';
+import { FormProps } from '@/typings';
 
 interface AuthPageProps {
   currentPage: string;
