@@ -1,0 +1,88 @@
+{
+  "authForm": {
+    "login": {
+      "title": "Login form",
+      "fields": [
+        {
+          "name": "identifier",
+          "placeholder": "Login or Email",
+          "validText": "Wrong login or email"
+        },
+        {
+          "name": "password",
+          "placeholder": "Password",
+          "validText": "Wrong password"
+        }
+      ],
+      "links": [
+        {
+          "name": "Do not have account ?",
+          "link": "register"
+        },
+        {
+          "name": "Refresh your password",
+          "link": "refresh"
+        }
+      ],
+      "button": "sign in"
+    },
+    "register": {
+      "title": "Registration form",
+      "fields": [
+        {
+          "name": "name",
+          "placeholder": "Login",
+          "validText": "Wrong login"
+        },
+        {
+          "name": "email",
+          "placeholder": "Email",
+          "validText": "Wrong email"
+        },
+        {
+          "name": "repeat-email",
+          "placeholder": "Repeat email",
+          "validText": "Email dont repeated"
+        },
+        {
+          "name": "password",
+          "placeholder": "Password",
+          "validText": "Wrong password"
+        },
+        {
+          "name": "repeat-password",
+          "placeholder": "Repeat password",
+          "validText": "Password dont repeated"
+        }
+      ],
+      "links": [
+        {
+          "name": "already have account ?",
+          "link": "login"
+        }
+      ],
+      "button": "Sign up"
+    },
+    "refresh": {
+      "title": "Refresh password",
+      "fields": [
+        {
+          "name": "identifier",
+          "placeholder": "Login or Email",
+          "validText": "Wrong login or email"
+        }
+      ],
+      "links": [
+        {
+          "name": "register form",
+          "link": "register"
+        },
+        {
+          "name": "login in form",
+          "link": "login"
+        }
+      ],
+      "button": "Refresh"
+    }
+  }
+}

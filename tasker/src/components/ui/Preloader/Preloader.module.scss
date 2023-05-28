@@ -1,0 +1,94 @@
+@keyframes rotate360_1 {
+  0%{transform: rotate(0deg)}
+  100%{transform: rotate(360deg)}
+}
+@keyframes rotate360_2 {
+  0%{transform: rotate(45deg)}
+  100%{transform: rotate(405deg)}
+}
+
+.preloader{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &_span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border: 5px var(--main) solid;
+
+    &:before,&:after{
+      content: "";
+      display: block;
+      position: absolute;
+      border-radius: 50px;
+    }
+    &:before{
+      width: 53px;
+      height: 53px;
+      border: 10px var(--sec) dashed;
+      animation: rotate360_1 2.5s infinite linear;
+    }
+    &:after{
+      width: 35px;
+      height: 35px;
+      border: 5px var(--main) dashed;
+      animation: rotate360_2 4s infinite linear;
+    }
+  }
+  &_logo{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:before,&:after{
+      content: "";
+      position: absolute;
+      background: var(--main);
+      width: 4px;
+      height: 12px;
+    }
+    &:before{
+      transform: translate(0,-4px) rotate(90deg);
+    }
+  }
+
+  &.big{
+    .preloader_span{
+      width: 200px;
+      height: 200px;
+      border-radius: 200px;
+      &:before,&:after{
+        border-radius: 203px;
+      }
+      &:before{
+        width: 203px;
+        height: 203px;
+        animation: rotate360_1 5s infinite linear;
+      }
+      &:after{
+        width: 150px;
+        height: 150px;
+        animation: rotate360_2 8s infinite linear;
+      }
+    }
+    .preloader_logo{
+      &:before,&:after{
+        width: 60px;
+        height: 10px;
+      }
+      &:after{
+        transform: translate(0,-20px);
+      }
+      &:before{
+        transform: translate(0,10px) rotate(90deg);
+      }
+    }
+  }
+}

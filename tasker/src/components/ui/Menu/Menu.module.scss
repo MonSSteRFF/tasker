@@ -1,0 +1,84 @@
+@use '@/styles/typography' as *;
+
+.menu{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+
+  &_button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    z-index: 100;
+    position: relative;
+    span{
+      width: 25px;
+      height: 1px;
+      background: var(--main);
+      transition: .3s;
+
+      &:not(:last-child){
+        margin-bottom: 5px;
+      }
+    }
+
+    &.open{
+
+      span:nth-child(1){
+        transform: rotate(45deg) translate(4px, 4px);
+      }
+      span:nth-child(2){
+        transform: rotate(-45deg) translate(-1px,1px);
+      }
+      span:nth-child(3){
+        transform: rotate(-45deg) translate(5px,-4px);
+        opacity: 0;
+      }
+    }
+  }
+
+  &_fields{
+    position: absolute;
+    bottom: 0;
+    right: -100px;
+    background: var(--sec);
+    transition: .3s;
+    width: 100px;
+    border: 1px var(--main) solid;
+    padding: 20px 20px 45px 20px;
+
+    &.open{
+      right: 0;
+    }
+  }
+}
+
+
+.lang{
+  margin-bottom: 10px;
+  &_btn{
+    margin-right: 5px;
+
+    &.active{
+      text-decoration: underline;
+    }
+
+    @extend %mon_600_14_16;
+  }
+}
+
+.theme {
+  &_btn{
+    margin-right: 5px;
+    &.active{
+      text-decoration: underline;
+    }
+
+    @extend %mon_600_14_16;
+  }
+}

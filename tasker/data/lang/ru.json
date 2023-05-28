@@ -1,0 +1,88 @@
+{
+  "authForm": {
+    "login": {
+      "title": "Вход",
+      "fields": [
+        {
+          "name": "identifier",
+          "placeholder": "Логин или Почта",
+          "validText": "Неверный логин или почта"
+        },
+        {
+          "name": "password",
+          "placeholder": "Пароль",
+          "validText": "Неверный пароль"
+        }
+      ],
+      "links": [
+        {
+          "name": "ещё нет аккаунта ?",
+          "link": "register"
+        },
+        {
+          "name": "забыли пароль",
+          "link": "refresh"
+        }
+      ],
+      "button": "Войти"
+    },
+    "register": {
+      "title": "Регистрация",
+      "fields": [
+        {
+          "name": "name",
+          "placeholder": "Логин",
+          "validText": "Неверный логин"
+        },
+        {
+          "name": "email",
+          "placeholder": "Почта",
+          "validText": "Неверная почта"
+        },
+        {
+          "name": "repeat-email",
+          "placeholder": "Повторите почту",
+          "validText": "Почты не совпадают"
+        },
+        {
+          "name": "password",
+          "placeholder": "Пароль",
+          "validText": "Неверный пароль"
+        },
+        {
+          "name": "repeat-password",
+          "placeholder": "Повторите пароль",
+          "validText": "Пароли не совпадают"
+        }
+      ],
+      "links": [
+        {
+          "name": "уже есть аккаунт ?",
+          "link": "login"
+        }
+      ],
+      "button": "Зарегистрироваться"
+    },
+    "refresh": {
+      "title": "Востановление пароля",
+      "fields": [
+        {
+          "name": "identifier",
+          "placeholder": "Логин или Почта",
+          "validText": "Неверный логин или почта"
+        }
+      ],
+      "links": [
+        {
+          "name": "зарегистрироваться",
+          "link": "register"
+        },
+        {
+          "name": "вспомнили пароль",
+          "link": "login"
+        }
+      ],
+      "button": "Востановить"
+    }
+  }
+}

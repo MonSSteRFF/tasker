@@ -1,0 +1,30 @@
+@use '@/styles/typography' as *;
+
+.form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  &_title{
+    margin-bottom: 20px;
+  }
+  &_link{
+    @extend %mon_400_14_16;
+    margin-bottom: 15px;
+  }
+  &_button{
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 1px var(--main) solid;
+    transition: .3s;
+
+    @extend %mon_400_14_16;
+
+    &.notValid{
+      background: var(--wrong);
+    }
+  }
+}

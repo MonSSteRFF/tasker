@@ -1,0 +1,25 @@
+@mixin monFont($size, $height, $weight){
+  font-size: #{$size}px;
+  line-height: #{$height}px;
+  font-weight: $weight;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--main);
+  transition: .3s color;
+}
+
+%mon{
+  &_200{
+    &_14_16{@include monFont(14,16,200)}
+  }
+  &_400{
+    &_14_16{@include monFont(14,16,400)}
+  }
+  &_600{
+    &_14_16{@include monFont(14,16,600)}
+    &_18_22{@include monFont(18,22,600)}
+    &_24_28{@include monFont(24,28,600)}
+  }
+  &_800{
+    &_14_16{@include monFont(14,16,800)}
+  }
+}
