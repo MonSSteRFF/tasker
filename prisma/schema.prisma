@@ -12,8 +12,16 @@ datasource db {
 
 model User {
   id       Int    @id @default(autoincrement())
+  name     String @unique
   email    String @unique
-  name     String
   password String
-  token    String @unique @default(uuid())
+  Jwt      Jwt[]
+}
+
+model Jwt {
+  token   String @unique @default(uuid())
+  refresh String @unique @default(uuid())
+  time    String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int    @unique
 }
