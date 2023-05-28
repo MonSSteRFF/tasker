@@ -18,10 +18,6 @@
         {
           "name": "Do not have account ?",
           "link": "register"
-        },
-        {
-          "name": "Refresh your password",
-          "link": "refresh"
         }
       ],
       "button": "sign in"
@@ -62,27 +58,6 @@
         }
       ],
       "button": "Sign up"
-    },
-    "refresh": {
-      "title": "Refresh password",
-      "fields": [
-        {
-          "name": "identifier",
-          "placeholder": "Login or Email",
-          "validText": "Wrong login or email"
-        }
-      ],
-      "links": [
-        {
-          "name": "register form",
-          "link": "register"
-        },
-        {
-          "name": "login in form",
-          "link": "login"
-        }
-      ],
-      "button": "Refresh"
     }
   }
 }

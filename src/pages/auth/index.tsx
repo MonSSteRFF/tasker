@@ -1,5 +1,7 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
+import FullPageLayout from '@/components/layout/FullPageLayout';
 import Form, { FormField } from '@/components/ui/Form/Form';
 import Preloader from '@/components/ui/Preloader/Preloader';
 import { apiWithoutToken } from '@/features/useApi';
@@ -26,16 +28,22 @@ const AuthPage = () => {
   const currentLang = useDataStore((state) => state.currentLanguage);
   const setJwt = useAuthStore((state) => state.setJwt);
 
+  const router = useRouter();
+
   const submitFormHandler = (
     fields: { [p: string]: string },
     redactorFormFields: React.Dispatch<React.SetStateAction<FormField[]>>,
   ) => {
     apiWithoutToken.post(`/auth?${query}`, fields).then((res) => {
-      if (res.data.jwt === undefined) {
+      console.log(res.data);
+
+      if (res.data.token === undefined) {
         const errorData: I_ErrorMessage[] = res.data;
         redactorFormFields((prev) =>
           prev.map((item) => {
             let errorMessage = '';
+            console.log(errorData);
+
             errorData.forEach((errorItem) => {
               if (errorItem.name === item.name && currentLang !== undefined) {
                 errorMessage = errorItem.error[currentLang];
@@ -46,13 +54,18 @@ const AuthPage = () => {
           }),
         );
       } else {
-        setJwt(res.data.jwt as I_Jwt);
+        setJwt({
+          token: res.data.token,
+          refresh: res.data.refresh,
+          jwtTime: res.data.jwtTime,
+        });
+        router.push('/');
       }
     });
   };
 
   return (
-    <main className={'container fullHeight'}>
+    <FullPageLayout title={query}>
       {currentForm !== undefined ? (
         <Form
           {...currentForm}
@@ -62,7 +75,7 @@ const AuthPage = () => {
       ) : (
         <Preloader type={'big'} />
       )}
-    </main>
+    </FullPageLayout>
   );
 };
 

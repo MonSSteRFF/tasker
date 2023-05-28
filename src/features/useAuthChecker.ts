@@ -11,9 +11,6 @@ const useAuthChecker = () => {
     if (jwtToken === undefined && router.pathname !== '/auth') {
       router.push('/auth?login');
     }
-    if (jwtToken !== undefined && jwtToken !== '' && jwtToken.length > 0) {
-      router.push('/home');
-    }
   }, [jwtToken]);
 };
 
