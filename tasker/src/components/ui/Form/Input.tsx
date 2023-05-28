@@ -29,7 +29,9 @@ const Input: React.FC<InputProps> = (props) => {
       : 'text';
 
   return (
-    <label className={`${styles.label} ${!isValid ? styles.notValid : ''}`}>
+    <label
+      className={`${styles.label} ${!isValid || errorText !== '' ? styles.notValid : ''}`}
+    >
       <input
         type={type}
         className={`${styles.label_input} ${value !== '' ? styles.active : ''} ${
@@ -45,8 +47,9 @@ const Input: React.FC<InputProps> = (props) => {
         <span className={`${styles.label_valid} ${buttonValid ? styles.wrong : ''}`}>
           {validText}
         </span>
+      ) : errorText !== '' ? (
+        <span className={styles.label_error}>{errorText}</span>
       ) : null}
-      {errorText !== '' ? <span className={styles.label_error}>{errorText}</span> : null}
     </label>
   );
 };

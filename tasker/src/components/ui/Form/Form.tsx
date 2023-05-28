@@ -35,11 +35,11 @@ const Form: React.FC<FormProps> = (props) => {
   const onChangeValue = (newValue: string, name: string) => {
     const valid = getValidation(newValue, name, formFields);
 
-    console.log(valid);
-
     setFormFields((prev) =>
       prev.map((item) =>
-        item.name === name ? { ...item, value: newValue, isValid: valid } : item,
+        item.name === name
+          ? { ...item, value: newValue, isValid: valid, errorText: '' }
+          : item,
       ),
     );
   };

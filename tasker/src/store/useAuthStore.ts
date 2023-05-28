@@ -1,31 +1,27 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { login, LoginArgs, register, RegisterArgs } from '@/store/useAuthStore.module';
-
 interface I_useAuthStore {
-  jwt?: string;
+  token?: string;
   refresh?: string;
-  register: (args: RegisterArgs) => void;
-  login: (args: LoginArgs) => void;
+  jwtTime?: string;
+  setJwt: (jwt: { token: string; refresh: string; jwtTime: string }) => void;
 }
 
 const useAuthStore = create<I_useAuthStore>()(
   persist(
     (set) => ({
-      register: async (args) => {
-        const tokens = await register(args);
-        set({ jwt: tokens.jwt, refresh: tokens.refresh });
-      },
-      login: async (args) => {
-        const tokens = await login(args);
-        set({ jwt: tokens.jwt, refresh: tokens.refresh });
-      },
+      setJwt: (jwt) =>
+        set({ token: jwt.token, refresh: jwt.refresh, jwtTime: jwt.jwtTime }),
     }),
     {
       name: 'TASKER_AUTH',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ jwt: state.jwt, refresh: state.refresh }),
+      partialize: (state) => ({
+        token: state.token,
+        refresh: state.refresh,
+        jwtTime: state.jwtTime,
+      }),
     },
   ),
 );

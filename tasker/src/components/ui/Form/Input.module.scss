@@ -58,6 +58,11 @@
     }
   }
   &_error{
+    position: absolute;
+    bottom: -5px;
+    transition: .3s;
+    color: var(--error);
 
+    @extend %mon_600_14_16;
   }
 }
