@@ -6,7 +6,6 @@ import '@/styles/globals.scss';
 
 import type { AppProps } from 'next/app';
 
-import FullPageLayout from '@/components/layout/FullPageLayout';
 import Menu from '@/components/ui/Menu/Menu';
 import Preloader from '@/components/ui/Preloader/Preloader';
 import PreloaderLine from '@/components/ui/Preloader/PreloaderLine';
@@ -28,10 +27,10 @@ export default function App({ Component, pageProps }: AppProps) {
           <Menu />
         </>
       ) : (
-        <FullPageLayout className={'fullHeight smallContainer'}>
+        <div className={'fullHeight smallContainer'}>
           <Preloader type={'big'} />
           <PreloaderLine lineStamp={lineStamp} />
-        </FullPageLayout>
+        </div>
       )}
     </>
   );

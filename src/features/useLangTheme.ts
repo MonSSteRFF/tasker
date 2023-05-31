@@ -20,7 +20,7 @@ const useLangTheme = () => {
     if (currentLang === undefined) {
       changeLang(E_lang.ru);
     }
-  }, []);
+  }, [currentLang]);
 };
 
 export default useLangTheme;
